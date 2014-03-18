@@ -8,7 +8,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>bikestash</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
@@ -18,8 +19,9 @@
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
-        <script src="bower_components/modernizr/modernizr.js"></script>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="bower_components/modernizr/modernizr.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBrMWqVIS8XEzCEnwr3NvWS25LIlU4f1vQ&sensor=true&libraries=places"></script>
+        <script type="text/javascript" src="scripts/d3.v3.min.js" charset="utf-8"></script>
 
     </head>
     <body>
@@ -27,17 +29,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-
-        <div class="hero-unit">
-          <h1>'Allo, 'Allo!</h1>
-          <p>You now have</p>
-          <ul>
-            <li>HTML5 Boilerplate</li>
-
-            <li>Modernizr</li>
-          </ul>
-        </div>
-
+        <div id="map"></div>
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
