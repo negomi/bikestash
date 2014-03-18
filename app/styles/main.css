@@ -1,20 +1,23 @@
 html, body, #map {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.racks, .racks svg {
-  position: absolute;
+.heading {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 3em;
+    margin-top: 1%;
+    padding-left: 2%;
+    position: absolute;
+    z-index: 100;
 }
 
-.racks svg {
-  width: 10px;
-  height: 10px;
-  border: solid black 1px;
+svg {
+    position: absolute;
 }
 
-.racks svg:hover {
+svg:hover {
     cursor: pointer;
 }
