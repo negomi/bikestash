@@ -10,14 +10,14 @@ function initialize() {
     var mapOptions = {
         zoom: 13,
         center: new google.maps.LatLng(37.7577, -122.4376),
-        panControl: true,
-        panControlOptions: {
-            position: google.maps.ControlPosition.LEFT_CENTER
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-            position: google.maps.ControlPosition.LEFT_CENTER
-        }
+        disableDefaultUI: true,
+        // mapType:
+        styles: [{
+            'stylers': [
+                { 'saturation': -100 },
+                { 'gamma': 0.5 }
+            ]
+        }]
     };
 
     // Create the map
