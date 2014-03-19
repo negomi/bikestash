@@ -56,21 +56,12 @@ function loadMarkers(dataSet) {
                         .style('top', (d.y - 10) + 'px');
                 }
 
-                // Find max or min element in array
-                function getFromArray(numArray, condition) {
-                    if (condition === 'max') {
-                        return Math.max.apply(null, numArray);
-                    } else if (condition === 'min') {
-                        return Math.min.apply(null, numArray);
-                    }
-                }
-
                 // Compress range while keeping ratio
-                var spaces = data.map(function(e){return e.spaces;});
+                var spaces = data.map(function(e){return parseInt(e.spaces, 10);});
                 var maxCircleRadius = 35;
                 var minCircleRadius = 6;
-                var oldMax = getFromArray(spaces, 'max');
-                var oldMin = getFromArray(spaces, 'min');
+                var oldMax = d3.max(spaces);
+                var oldMin = d3.min(spaces);
                 var oldRange = (oldMax - oldMin);
                 var newRange = (maxCircleRadius - minCircleRadius);
 
@@ -112,20 +103,6 @@ function loadMarkers(dataSet) {
                             .duration(500)
                             .style('fill', randomColor);
                     });
-                    // .on('mouseout', function() {
-                    //     d3.select(this)
-                    //         .transition()
-                    //         .delay(1000)
-                    //         .duration(1000)
-                    //         .style('fill', '#e35026');
-                    // });
-
-                // Add a label.
-                // marker.append('svg:text')
-                //     .attr('x', 25 + 7)
-                //     .attr('y', 25)
-                //     .attr('dy', '.31em')
-                //     .text(function(d) {return d.key;});
 
             };
         };
