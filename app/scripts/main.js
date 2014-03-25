@@ -1,17 +1,24 @@
-// Data source URL (load from server eventually?)
-var bikeRacks = 'http://data.sfgov.org/resource/w969-5mn4.json?' +
+// Get data from SF Open Data Portal
+// Will only return 1000 results per request
+var datasetOne = 'http://data.sfgov.org/resource/w969-5mn4.json?' +
+    'status_detail=INSTALLED' +
+    '&$where=spaces>0 AND spaces<30';
+
+var datasetTwo = 'http://data.sfgov.org/resource/w969-5mn4.json?' +
     'status_detail=INSTALLED' +
     '&$offset=1000' +
     '&$where=spaces>0 AND spaces<30';
 
-// $.get('sfbikeparking.json', function(data){console.log(data);});
+var datasetThree = 'http://data.sfgov.org/resource/w969-5mn4.json?' +
+    'status_detail=INSTALLED' +
+    '&$offset=2000' +
+    '&$where=spaces>0 AND spaces<30';
 
 function initialize() {
     var mapOptions = {
         zoom: 13,
         center: new google.maps.LatLng(37.7577, -122.4376),
         disableDefaultUI: true,
-        // mapType:
         styles: [{
             'stylers': [
                 { 'saturation': -100 },
@@ -72,7 +79,7 @@ function loadMarkers(dataSet) {
 
                 // Get random color
                 function randomColor() {
-                    return 'hsl(' + Math.random() * 360 + ', 70%, 40%)';
+                    return 'hsl(' + Math.random() * 360 + ', 70%, 30%)';
                 };
 
                 // Make heading random color
@@ -112,7 +119,9 @@ function loadMarkers(dataSet) {
     });
 }
 
-google.maps.event.addDomListener(window, 'load', function(){
+google.maps.event.addDomListener(window, 'load', function() {
     initialize();
-    loadMarkers(bikeRacks);
+    loadMarkers(datasetOne);
+    loadMarkers(datasetTwo);
+    loadMarkers(datasetThree);
 });
