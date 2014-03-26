@@ -80,7 +80,7 @@ function loadMarkers(dataSet) {
                 // Get random color
                 function randomColor() {
                     return 'hsl(' + Math.random() * 360 + ', 70%, 30%)';
-                };
+                }
 
                 // Make heading random color
                 d3.select('.heading')
@@ -113,6 +113,7 @@ function loadMarkers(dataSet) {
 
             };
         };
+
         // Bind overlay to the map
         var map = getMap();
         overlay.setMap(map);
