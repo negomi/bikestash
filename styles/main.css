@@ -5,19 +5,10 @@ html, body, #map {
     padding: 0;
 }
 
-.heading {
-    font-family: 'Audiowide', sans-serif;
-    font-size: 3em;
-    margin-top: 1%;
-    padding-left: 2%;
-    position: absolute;
-    z-index: 100;
-}
-
-svg {
+/*svg {
     position: absolute;
 }
 
 svg:hover {
     cursor: pointer;
-}
+}*/

@@ -1,53 +1,17 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>BikeStash</title>
-        <meta name="description" content="">
-        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="description" content="A visualization of public bike parking facilities in San Francisco">
         <meta name="viewport" content="width=device-width">
-        <!-- build:css styles/vendor.css -->
-        <!-- bower:css -->
-
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
         <link rel="stylesheet" type='text/css' href="styles/main.css">
-        <!-- endbuild -->
-        <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Audiowide'>
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBrMWqVIS8XEzCEnwr3NvWS25LIlU4f1vQ&sensor=true"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
         <script type="text/javascript" src="scripts/d3.v3.min.js" charset="utf-8"></script>
-
     </head>
     <body>
-        <!--[if lt IE 10]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-        <h1 class="heading">BikeStash</h1>
         <div id="map"></div>
-
-        <!-- build:js scripts/vendor.js -->
-        <!-- bower:js -->
-        <!-- endbower -->
-        <!-- endbuild -->
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
-
-        <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>
-        <!-- endbuild -->
-</body>
+    </body>
 </html>
