@@ -1,13 +1,32 @@
-let map = L.map("map").setView([37.7577, -122.4376], 13);
+(function(L) {
+    'use strict';
 
-L.tileLayer("http://a.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibmVnb21pIiwiYSI6IkRNSkNoRWMifQ.cydNn3XrNI48_36-Wwz2kw", {
-    attribution: "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
-    maxZoom: 18
-}).addTo(map);
+    class Map {
+        constructor(id, opts) {
+            this.view = L.map(id).setView(opts.coords, opts.zoom);
+            this.opts = opts;
+            this.init();
+        }
+    }
 
-class Map {
+    Map.prototype.init = function() {
+        L.tileLayer(`${this.opts.tiles}?access_token=${this.opts.token}`, {
+            attribution: this.opts.attribution,
+            maxZoom: this.opts.maxZoom
+        }).addTo(this.view);
+    };
 
-}
+    var opts = {
+        coords: [37.7577, -122.4376],
+        zoom: 13,
+        maxZoom: 18,
+        tiles: 'http://a.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png',
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        token: 'pk.eyJ1IjoibmVnb21pIiwiYSI6IkRNSkNoRWMifQ.cydNn3XrNI48_36-Wwz2kw'
+    };
+
+    var sf = new Map('map', opts);
+})(L);
 
 // function initialize() {
 //     var mapOptions = {
