@@ -27,12 +27,16 @@
     };
 
     Map.prototype.addMarkers = function() {
-        this.markers = new L.MarkerClusterGroup();
         let markers = [];
+        let iconStyles = { icon: 'bicycle', prefix: 'fa', markerColor: 'black' };
+        let polygonStyles = { color: '#303030', opacity: 0.9 };
+
+        this.markers = new L.MarkerClusterGroup({polygonOptions: polygonStyles});
 
         this.data.forEach((item) => {
             let marker = L.marker(
-                [item.latitude.latitude, item.latitude.longitude]
+                [item.latitude.latitude, item.latitude.longitude],
+                {icon: L.AwesomeMarkers.icon(iconStyles)}
             ).bindPopup(this.formatPopupContent(item));
 
             markers.push(marker);
@@ -44,12 +48,13 @@
 
     Map.prototype.formatPopupContent = function(item) {
         // Eliminate weird data values.
-        let name = item.addr_num !== 'UK' ? `<h3>${item.addr_num}</h3>` : '';
-        let address = item.yr_inst !== 'None' ? `<h4>${item.yr_inst}</h4>` : '';
+        let name = item.addr_num !== 'UK' ? `<div class="name">${item.addr_num}</div>` : '';
+        let address = item.yr_inst !== 'None' ? `<div class="address">${item.yr_inst}</div>` : '';
 
         return `${name} ${address}
-        <div><b>Racks:</b> ${item.racks}</div>
-        <div><b>Spaces:</b> ${item.spaces}</div>`;
+            <hr class="divider">
+            <div>Racks: <span class="number">${item.racks}</span></div>
+            <div>Spaces: <span class="number">${item.spaces}</span></div>`;
     }
 
     let opts = {

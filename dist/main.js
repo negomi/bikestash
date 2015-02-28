@@ -35,11 +35,14 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
     Map.prototype.addMarkers = function () {
         var _this = this;
 
-        this.markers = new L.MarkerClusterGroup();
         var markers = [];
+        var iconStyles = { icon: "bicycle", prefix: "fa", markerColor: "black" };
+        var polygonStyles = { color: "#303030", opacity: 0.9 };
+
+        this.markers = new L.MarkerClusterGroup({ polygonOptions: polygonStyles });
 
         this.data.forEach(function (item) {
-            var marker = L.marker([item.latitude.latitude, item.latitude.longitude]).bindPopup(_this.formatPopupContent(item));
+            var marker = L.marker([item.latitude.latitude, item.latitude.longitude], { icon: L.AwesomeMarkers.icon(iconStyles) }).bindPopup(_this.formatPopupContent(item));
 
             markers.push(marker);
         });
@@ -52,10 +55,10 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
 
     Map.prototype.formatPopupContent = function (item) {
         // Eliminate weird data values.
-        var name = item.addr_num !== "UK" ? "<h3>" + item.addr_num + "</h3>" : "";
-        var address = item.yr_inst !== "None" ? "<h4>" + item.yr_inst + "</h4>" : "";
+        var name = item.addr_num !== "UK" ? "<div class=\"name\">" + item.addr_num + "</div>" : "";
+        var address = item.yr_inst !== "None" ? "<div class=\"address\">" + item.yr_inst + "</div>" : "";
 
-        return "" + name + " " + address + "\n        <div><b>Racks:</b> " + item.racks + "</div>\n        <div><b>Spaces:</b> " + item.spaces + "</div>";
+        return "" + name + " " + address + "\n            <hr class=\"divider\">\n            <div>Racks: <span class=\"number\">" + item.racks + "</span></div>\n            <div>Spaces: <span class=\"number\">" + item.spaces + "</span></div>";
     };
 
     var opts = {

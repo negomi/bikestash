@@ -23,7 +23,7 @@ gulp.task('es6', function () {
 gulp.task('watch', function () {
     livereload.listen();
     gulp.watch('*.html').on('change', livereload.changed);
-    gulp.watch('css/**/*.css').on('change', livereload.changed);
+    gulp.watch('styles/**/*.css').on('change', livereload.changed);
     gulp.watch('scripts/**/*.js').on('change', livereload.changed);
     gulp.watch('scripts/**/*.js', ['es6']);
 });

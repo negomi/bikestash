@@ -3,12 +3,89 @@ html, body, #map {
     height: 100%;
     margin: 0;
     padding: 0;
+
+    color: #303030;
 }
 
-/*svg {
-    position: absolute;
+
+/* Popup styles */
+.leaflet-popup-content-wrapper {
+    border-radius: 0;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.2)
 }
 
-svg:hover {
-    cursor: pointer;
-}*/
+.leaflet-popup-content {
+    margin: 20px 24px 16px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+    padding-top: 6px;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.divider {
+    border: 1px solid #999;
+    border-radius: 2px;
+}
+
+.number {
+    color: rgb(214, 62, 42);
+    font-weight: bold;
+}
+
+
+/* Marker cluster styles */
+
+.marker-cluster-small,
+.leaflet-oldie .marker-cluster-small {
+    background-color: white;
+    border: solid 5px rgb(226, 119, 105);
+}
+.marker-cluster-small div,
+.leaflet-oldie .marker-cluster-small div {
+    background-color: rgb(226, 119, 105);
+}
+
+.marker-cluster-medium,
+.leaflet-oldie .marker-cluster-medium {
+    background-color: white;
+    border: solid 5px rgb(214, 62, 42);
+}
+.marker-cluster-medium div,
+.leaflet-oldie .marker-cluster-medium div {
+    background-color: rgb(214, 62, 42);
+}
+
+.marker-cluster-large,
+.leaflet-oldie .marker-cluster-large {
+    background-color: white;
+    border: solid 5px rgb(149, 43, 29);
+}
+.marker-cluster-large div,
+.leaflet-oldie .marker-cluster-large div {
+    background-color: rgb(149, 43, 29);
+}
+
+.marker-cluster {
+    background-clip: padding-box;
+    border-radius: 30px;
+}
+
+.marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.marker-cluster span {
+    line-height: 30px;
+}
