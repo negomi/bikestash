@@ -17,7 +17,7 @@ gulp.task('es6', function () {
         console.log('Error compiling to ES5:\n' + err.message);
         this.emit('end');
     })
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function () {
