@@ -20,7 +20,7 @@
     };
 
     Map.prototype.fetchData = function() {
-        $.getJSON('/data/sfbikeparking.json', (data) => {
+        $.getJSON('/bikestash/data/sfbikeparking.json', (data) => {
             this.data = data;
             this.addMarkers();
         });

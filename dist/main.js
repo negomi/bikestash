@@ -26,7 +26,7 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
     Map.prototype.fetchData = function () {
         var _this = this;
 
-        $.getJSON("/data/sfbikeparking.json", function (data) {
+        $.getJSON("/bikestash/data/sfbikeparking.json", function (data) {
             _this.data = data;
             _this.addMarkers();
         });
