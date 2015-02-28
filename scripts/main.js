@@ -1,128 +1,71 @@
-// Get data from SF Open Data Portal
-// Will only return 1000 results per request
-var datasetOne = 'http://data.sfgov.org/resource/w969-5mn4.json?' +
-    'status_detail=INSTALLED' +
-    '&$where=spaces>0 AND spaces<30';
+(function($, L) {
+    'use strict';
 
-var datasetTwo = 'http://data.sfgov.org/resource/w969-5mn4.json?' +
-    'status_detail=INSTALLED' +
-    '&$offset=1000' +
-    '&$where=spaces>0 AND spaces<30';
+    class Map {
+        constructor(opts) {
+            this.opts = opts;
+            this.init();
+        }
+    }
 
-var datasetThree = 'http://data.sfgov.org/resource/w969-5mn4.json?' +
-    'status_detail=INSTALLED' +
-    '&$offset=2000' +
-    '&$where=spaces>0 AND spaces<30';
+    Map.prototype.init = function() {
+        this.view = L.map(this.opts.id).setView(this.opts.coords, this.opts.zoom);
 
-function initialize() {
-    var mapOptions = {
+        L.tileLayer(`${this.opts.tiles}?access_token=${this.opts.token}`, {
+            attribution: this.opts.attribution,
+            maxZoom: this.opts.maxZoom
+        }).addTo(this.view);
+
+        this.fetchData();
+    };
+
+    Map.prototype.fetchData = function() {
+        $.getJSON('/data/sfbikeparking.json', (data) => {
+            this.data = data;
+            this.addMarkers();
+        });
+    };
+
+    Map.prototype.addMarkers = function() {
+        let markers = [];
+        let iconStyles = { icon: 'bicycle', prefix: 'fa', markerColor: 'black' };
+        let polygonStyles = { color: '#303030', opacity: 0.9 };
+
+        this.markers = new L.MarkerClusterGroup({polygonOptions: polygonStyles});
+
+        this.data.forEach((item) => {
+            let marker = L.marker(
+                [item.latitude.latitude, item.latitude.longitude],
+                {icon: L.AwesomeMarkers.icon(iconStyles)}
+            ).bindPopup(this.formatPopupContent(item));
+
+            markers.push(marker);
+        });
+
+        this.markers.addLayers(markers).addTo(this.view);
+        this.markers.on('click', function() { this.openPopup() });
+    };
+
+    Map.prototype.formatPopupContent = function(item) {
+        // Eliminate weird data values.
+        let name = item.addr_num !== 'UK' ? `<div class="name">${item.addr_num}</div>` : '';
+        let address = item.yr_inst !== 'None' ? `<div class="address">${item.yr_inst}</div>` : '';
+
+        return `${name} ${address}
+            <hr class="divider">
+            <div>Racks: <span class="number">${item.racks}</span></div>
+            <div>Spaces: <span class="number">${item.spaces}</span></div>`;
+    }
+
+    let opts = {
+        id: 'map',
+        coords: [37.7577, -122.4376],
         zoom: 13,
-        center: new google.maps.LatLng(37.7577, -122.4376),
-        disableDefaultUI: true,
-        styles: [{
-            'stylers': [
-                { 'saturation': -100 },
-                { 'gamma': 0.5 }
-            ]
-        }]
+        maxZoom: 18,
+        tiles: 'http://{s}.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png',
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        token: 'pk.eyJ1IjoibmVnb21pIiwiYSI6IkRNSkNoRWMifQ.cydNn3XrNI48_36-Wwz2kw'
     };
 
-    // Create the map
-    var map = new google.maps.Map(d3.select('#map').node(), mapOptions);
-
-    // Make map object available
-    return getMap = function() {
-        return map;
-    };
-}
-
-// Draw markers on map
-function loadMarkers(dataSet) {
-    d3.json(dataSet, function(error, data) {
-        if (error) { console.warn(error); }
-
-        var overlay = new google.maps.OverlayView();
-
-        overlay.onAdd = function() {
-            var layer = d3.select(this.getPanes().overlayMouseTarget)
-                .append('div');
-
-            overlay.draw = function() {
-                var projection = this.getProjection();
-
-                // Set marker position
-                function setPosition(d) {
-                    var lat = d.value.coordinates.latitude;
-                    var lng = d.value.coordinates.longitude;
-
-                    d = new google.maps.LatLng(lat, lng);
-                    d = projection.fromLatLngToDivPixel(d);
-
-                    return d3.select(this)
-                        .style('left', (d.x - 10) + 'px')
-                        .style('top', (d.y - 10) + 'px');
-                }
-
-                // Compress range while keeping ratio
-                var spaces = data.map(function(e){return parseInt(e.spaces, 10);});
-                var maxCircleRadius = 35;
-                var minCircleRadius = 6;
-                var oldMax = d3.max(spaces);
-                var oldMin = d3.min(spaces);
-                var oldRange = (oldMax - oldMin);
-                var newRange = (maxCircleRadius - minCircleRadius);
-
-                // Calculate new radius value based on num spaces
-                function radiusValue(d) {
-                    return (((d.value.spaces - oldMin) * newRange) / oldRange) + minCircleRadius;
-                }
-
-                // Get random color
-                function randomColor() {
-                    return 'hsl(' + Math.random() * 360 + ', 70%, 30%)';
-                }
-
-                // Make heading random color
-                d3.select('.heading')
-                    .style('color', randomColor)
-                    .style('opacity', 0.5);
-
-                // Set position and size of marker elements
-                var marker = layer.selectAll('svg')
-                    .data(d3.entries(data)) // turn obj literal into k/v pairs
-                    .each(setPosition) // update existing markers
-                    .enter()
-                        .append('svg:svg')
-                        .each(setPosition)
-                        .attr('width', function(d) {return radiusValue(d)*2+'px';})
-                        .attr('height', function(d) {return radiusValue(d)*2+'px';});
-
-                // Create SVG circles
-                marker.append('svg:circle')
-                    .attr('r', function(d) {return radiusValue(d);})
-                    .attr('cx', function(d) {return radiusValue(d);})
-                    .attr('cy', function(d) {return radiusValue(d);})
-                    .style('opacity', '0.5')
-                    .style('fill', randomColor)
-                    .on('mouseover', function() {
-                        d3.select(this)
-                            .transition()
-                            .duration(500)
-                            .style('fill', randomColor);
-                    });
-
-            };
-        };
-
-        // Bind overlay to the map
-        var map = getMap();
-        overlay.setMap(map);
-    });
-}
-
-google.maps.event.addDomListener(window, 'load', function() {
-    initialize();
-    loadMarkers(datasetOne);
-    loadMarkers(datasetTwo);
-    loadMarkers(datasetThree);
-});
+    let sf = new Map(opts);
+})(jQuery, L);
