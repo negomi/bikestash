@@ -1,10 +1,35 @@
-html, body, #map {
-    width: 100%;
+html, body {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
+}
 
-    color: #303030;
+#map {
+    height: 100%;
+    width: 94%;
+    float: right;
+}
+
+#sidebar {
+    height: 100%;
+    width: 6%;
+    float: left;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #303030;
+}
+
+.logo {
+    font-family: 'Leckerli One', cursive;
+    font-size: 64px;
+    color: rgb(214, 62, 42);
+
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 
@@ -16,6 +41,7 @@ html, body, #map {
 
 .leaflet-popup-content {
     margin: 20px 24px 16px;
+    color: #303030;
 }
 
 .leaflet-container a.leaflet-popup-close-button {
