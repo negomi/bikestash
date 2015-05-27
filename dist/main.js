@@ -5,6 +5,8 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
 (function ($, L) {
     "use strict";
 
+    // Map constructor.
+
     var Map = function Map(opts) {
         _classCallCheck(this, Map);
 
@@ -12,6 +14,7 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
         this.init();
     };
 
+    // Inititalizes the map object and adds the tiles.
     Map.prototype.init = function () {
         this.view = L.map(this.opts.id).setView(this.opts.coords, this.opts.zoom);
 
@@ -23,6 +26,7 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
         this.fetchData();
     };
 
+    // Fetches the data and then calls the addMarkers function.
     Map.prototype.fetchData = function () {
         var _this = this;
 
@@ -32,6 +36,9 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
         });
     };
 
+    // Adds markers to the map, handling styling for the icons and polygons.
+    // Clusters groups of markers using Leaflet.markercluster.
+    // Sets click handler for individual markers.
     Map.prototype.addMarkers = function () {
         var _this = this;
 
@@ -53,14 +60,16 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
         });
     };
 
+    // Builds the HTML to populate a marker's popup tooltip.
     Map.prototype.formatPopupContent = function (item) {
-        // Eliminate weird data values.
+        // Eliminates weird data values.
         var name = item.addr_num !== "UK" ? "<div class=\"name\">" + item.addr_num + "</div>" : "";
         var address = item.yr_inst !== "None" ? "<div class=\"address\">" + item.yr_inst + "</div>" : "";
 
         return "" + name + " " + address + "\n            <hr class=\"divider\">\n            <div>Racks: <span class=\"number\">" + item.racks + "</span></div>\n            <div>Spaces: <span class=\"number\">" + item.spaces + "</span></div>";
     };
 
+    // Sets the options to initialize the map.
     var opts = {
         id: "map",
         coords: [37.7577, -122.4376],
@@ -71,5 +80,6 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
         token: "pk.eyJ1IjoibmVnb21pIiwiYSI6IkRNSkNoRWMifQ.cydNn3XrNI48_36-Wwz2kw"
     };
 
+    // Creates a map instance.
     var sf = new Map(opts);
 })(jQuery, L);
