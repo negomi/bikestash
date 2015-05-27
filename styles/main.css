@@ -6,15 +6,19 @@ html, body {
 }
 
 #map {
-    height: 100%;
-    width: 94%;
-    float: right;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 86px;
 }
 
 #sidebar {
-    height: 100%;
-    width: 6%;
-    float: left;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 86px;
+
     padding: 10px;
     box-sizing: border-box;
     background: #303030;
@@ -32,8 +36,10 @@ html, body {
     transform: rotate(90deg);
 }
 
+/*************************/
+/* Popup styles          */
+/*************************/
 
-/* Popup styles */
 .leaflet-popup-content-wrapper {
     border-radius: 0;
     box-shadow: 1px 1px 5px rgba(0,0,0,0.2)
@@ -62,8 +68,9 @@ html, body {
     font-weight: bold;
 }
 
-
+/*************************/
 /* Marker cluster styles */
+/*************************/
 
 .marker-cluster-small,
 .leaflet-oldie .marker-cluster-small {
