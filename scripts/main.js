@@ -23,7 +23,7 @@
     // Fetches the data and then calls the addMarkers function.
     fetchData() {
       var request = new XMLHttpRequest();
-      request.open('GET', '/data/sfbikeparking.json', true);
+      request.open('GET', location.pathname + 'data/sfbikeparking.json', true);
 
       request.onload = () => {
         if (request.status >= 200 && request.status < 400) {
