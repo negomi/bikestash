@@ -4,6 +4,7 @@ var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
+var ghPages = require('gulp-gh-pages');
 
 gulp.task('connect', function() {
   connect.server({
@@ -63,6 +64,20 @@ gulp.task('watch', function () {
   gulp.watch('scripts/**/*.js', ['scripts']);
   gulp.watch('styles/**/*.css', ['styles']);
   gulp.watch('index.html', ['scripts', 'styles']);
+});
+
+gulp.task('deploy', ['scripts', 'styles'], function() {
+  gulp.src([
+    'js/all.min.js',
+    'css/**/*',
+    'data/*',
+    'fonts/*',
+    'index.html',
+  ], { base: './' })
+    .pipe(gulp.dest('dist'));
+
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
 
 gulp.task('default', ['connect', 'scripts', 'styles', 'watch']);
